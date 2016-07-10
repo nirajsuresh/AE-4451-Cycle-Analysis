@@ -21,5 +21,5 @@ function outputs = turbofan(inputs)
     [gammas, MWs, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(Ma);
     
     % DO STUFF
-    
+    % Do more stuff
 end
