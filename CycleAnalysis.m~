@@ -48,7 +48,6 @@ end
 
 %Main script
 function run_Callback(hObject, eventdata, handles)
-    global engineType
     %Get the design parameters
     Ta = str2double(handles.Ta.String);
     Pa = str2double(handles.Pa.String);
@@ -64,11 +63,6 @@ function run_Callback(hObject, eventdata, handles)
     Tmax = str2double(handles.Tmax.String);
     Tmaxab = str2double(handles.Tmaxab.String);
     bma = str2double(handles.bma.String);
-    %Get mods
-    compressorBleed = handles.compressorBleed.Value;
-    afterburner = handles.afterburner.Value;
-    combinedNozzle = handles.combinedNozzle.Value;
-    
     inputs = [Ta Pa Pf Ma Prc B b Prf f fab Tmax Tmaxab bma compressorBleed afterburner combinedNozzle];
     if engineType == 1
         results = ramjet(inputs);
