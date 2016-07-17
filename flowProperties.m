@@ -1,4 +1,4 @@
-function [gammas, MWs, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(M)
+function [gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(M)
 % diffuser (d)
 % bypass fan (f)
 % compressor (c)
@@ -12,28 +12,18 @@ function [gammas, MWs, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowPr
 % specific heat ratios
    yd = 1.4;
    yf = 1.4;
-   yc = 1.4;
+   yc = 1.38;
    yp = 1.4;
-   yb = 1.4;
-   yt = 1.4;
-   yft = 1.4;
-   yab = 1.4;
-   yn = 1.4;
+   yb = 1.33;
+   yt = 1.33;
+   yft = 1.33;
+   yab = 1.32;
+   yn = 1.35;
    yfn = 1.4;
-   ycn = 1.4;
+   ycn = 1.37;
    gammas = [yd, yf, yc, yp, yb, yt, yft, yab, yn, yfn, ycn];
 % molecular weights
-   Md = 28;
-   Mf = 28;
-   Mc = 28;
-   Mp = 28;
-   Mt = 28;
-   Mft = 28;
-   Mab = 28;
-   Mn = 28;
-   Mfn = 28;
-   Mcn = 28;
-   MWs = [Md, Mf, Mc, Mp, Mt, Mft, Mab, Mn, Mfn, Mcn];
+   mw = 28.8;
 % adiabatic efficiencies
    Nn = 0.9;
    Nfn = 0.9;
