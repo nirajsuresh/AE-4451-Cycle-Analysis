@@ -1,5 +1,0 @@
-function  diffuser(Ta, Pa)
-    [gammas, Mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(M);
-    gamma = gammas(1);
-    Minf
-end

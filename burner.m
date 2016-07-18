@@ -1,16 +1,14 @@
 %ramjet doesn't have a burner
-
 %turbojet & turbofan
-function [T04, P04] = burner(yb, T04, T03, Nb, hr)
-R = 8314 / mw;
+function [To4, Po4, f] = burner(yb, Po3, To3, Nb, hr, R, Prb)
 
-cpb = R * (yb / yb-1);
+    cpb = R * (yb / yb-1);
 
-f = ((T04/T03) - 1) / ((Nb*hr / cpb*T03) - (T04/T03));
+    To4 = (To3 + ((Nb*f*hr) / cpb)) * (1 / (1+f));
+    
+    f = ((To4/To3) - 1) / ((Nb*hr / cpb*To3) - (To4/To3));
 
-T04 = (T03 + ((Nb*f*hr) / cpb)) * (1 / (1+f));
-
-P04 = P03 * (P04/P03);
+    Po4 = Po3 * Prb;
 end
 
 

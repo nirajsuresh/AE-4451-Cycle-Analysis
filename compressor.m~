@@ -1,0 +1,6 @@
+function compressor
+    % Same for all engines
+    Po3 = Po2 * Prc;
+    To3 = To3 * (1 + 
+    
+end
