@@ -35,7 +35,8 @@ function [outputs, Tis, Pis] = ramjet(inputs)
     
     
     % DO STUFF
-    [To1, Po1] = diffuser(Ta, Pa, yd, Ma);
+    Nd = aEff(4);
+    [To1, Po1] = diffuser(Ta, Pa, yd, Ma, Nd);
     
     
     Nb = cEff(1);

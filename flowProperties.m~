@@ -30,7 +30,7 @@ function [Runiv, gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = 
    Nfn = 0.97;
    Ncn = 0.95;
    Nd = 0.92;
-   Np = 0.35;
+   Np = 0.9;
    aEff = [Nn, Nfn, Ncn, Nd, Np];
 % ram pressure recovery
    if M < 1 
@@ -49,11 +49,11 @@ function [Runiv, gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = 
    Nab = 0.96;
    cEff = [Nb, Nab];
 % stagnation pressure ratios
-   Prb = 0.98;
-   Prab = 0.97;
+   Prb = 10;
+   Prab = 10;
    Prs = [Prb, Prab];
 % fuel heating value
-   hr = 45 * 10 ^ 6;
+   hr = 1000;
 % fuel density
    rhof = 1;
 % specific drag loss
