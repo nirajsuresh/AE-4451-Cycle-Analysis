@@ -95,28 +95,14 @@ function run_Callback(hObject, eventdata, handles)
     handles.T2.String = num2str(Tis(2));
     handles.T3.String = num2str(Tis(3));
     handles.T4.String = num2str(Tis(4));
-    handles.T51.String = num2str(Tis(5));
-    handles.T5m.String = num2str(Tis(6));
-    handles.T52.String = num2str(Tis(7));
-    handles.T6.String = num2str(Tis(8));
-    handles.Te.String = num2str(Tis(9));
-    handles.Tef.String = num2str(Tis(10));
-    handles.T7.String = num2str(Tis(11));
-    handles.Tec.String = num2str(Tis(12));
-    
-    handles.P1.String = num2str(Pis(1));
-    handles.P2.String = num2str(Pis(2));
-    handles.P3.String = num2str(Pis(3));
-    handles.P4.String = num2str(Pis(4));
-    handles.P51.String = num2str(Pis(5));
-    handles.P5m.String = num2str(Pis(6));
-    handles.P52.String = num2str(Pis(7));
-    handles.P6.String = num2str(Pis(8));
-    handles.Pe.String = num2str(Pis(9));
-    handles.Pef.String = num2str(Pis(10));
-    handles.P7.String = num2str(Pis(11));
-    handles.Pec.String = num2str(Pis(12));
-    handles.Pfp.String = num2str(Pis(13));
+    handles.T51.String = num2str(Tis(1));
+    handles.T5m.String = num2str(Tis(1));
+    handles.T52.String = num2str(Tis(1));
+    handles.T6.String = num2str(Tis(1));
+    handles.Te.String = num2str(Tis(1));
+    handles.Tef.String = num2str(Tis(1));
+    handles.T7.String = num2str(Tis(1));
+    handles.Tec.String = num2str(Tis(1));
     
     
 end

@@ -1,4 +1,4 @@
-function [gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(M)
+function [Runiv, gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(M)
 % diffuser (d)
 % bypass fan (f)
 % compressor (c)
@@ -10,6 +10,7 @@ function [gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowPro
 % fan nozzle (fn)
 % combined nozzle (cn) [replaces core and fan nozzles]
 % specific heat ratios
+   Runiv = 8314;
    yd = 1.4;
    yf = 1.4;
    yc = 1.38;

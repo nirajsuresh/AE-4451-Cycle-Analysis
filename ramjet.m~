@@ -1,4 +1,4 @@
-function [outputs, Tis, Pis] = ramjet(inputs)
+function outputs = ramjet(inputs)
     % Get inputs
     Ta = inputs(1);
     Pa = inputs(2);
@@ -30,26 +30,17 @@ function [outputs, Tis, Pis] = ramjet(inputs)
     yn = gammas(9);
     yfn = gammas(10);
     ycn = gammas(11);
-    R = Runiv / mw;
-    u = Ma * sqrt(1.4 * R * Ta);
-    
-    
     % DO STUFF
     [To1, Po1] = diffuser(Ta, Pa, yd, Ma);
-    
-    
+    R = Runiv / mw;
     Nb = cEff(1);
     Prb = Prs(1);
     [Po4, f] = burner(yb, Po1, To1, Tmax, Nb, hr, R, Prb);
     
-    Nn = aEff(1);
-    [ue, Te, specT, TSFC, np, nth, no] = coreNozzle(Tmax, Po4, yn, Nn, R, f, Ma, Ta, Pa, hr);
-
     
-    %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wi];
-    outputs = [specT, 0, 0, ue, 0, 0, TSFC, np, nth, no, u, 0];
-    Tis = [To1, 0, 0, Tmax, 0, 0, 0, 0, Te, 0, 0, 0];
-    Pis = [Po1, 0, 0, Po4, 0, 0, 0, 0, Pa, 0, 0, 0, 0];
+    
+    % outputs = [spThrust, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wi];
+    % Tis = [To1, 0, 0, Tmax, 0, 0, 0, 0, Te]
     
     
 end
