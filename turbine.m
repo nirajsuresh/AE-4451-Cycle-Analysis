@@ -1,8 +1,8 @@
 %turbojet, ramjet, & turbofan
 
-function [T05, P05] = turbine(T04, T03, T02, f, yt, Nt)
-T05 = T04 - ((T03 - T02) / (1 + f));
+function [To5, Po5] = turbine(To4, To3, To2, f, yt, NPt)
+To5 = To4 - ((To3 - To2) / (1 + f));
 
-P05 = P04 * (1 + (1/Nt)*((T05/T04) - 1))^(yt/(yt-1));
+Po5 = Po4 * (1 + (1/NPt)*((To5/To4) - 1))^(yt/(yt-1));
 end
 
