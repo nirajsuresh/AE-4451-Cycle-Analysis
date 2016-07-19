@@ -30,4 +30,6 @@ cb1 = 700; %Kelvin
 
 Tmax = Tmaxo + (cb1 * sqrt(b/bmax));
 
+specTeff = specT - deld;
+
 end

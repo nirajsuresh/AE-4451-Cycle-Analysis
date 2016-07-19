@@ -1,4 +1,4 @@
-function [Wnorm] = fuelPump(Np, f)
+function [wfp, Pexit] = fuelPump(Np, f)
 
 deltaPinj = 55e4; %Pascals
 
@@ -10,6 +10,8 @@ Pf2 = Pcc + deltaPinj;
 
 deltaPpump = Pf2 - Pf1;
 
-Wnorm = (f*deltaPpump) /(Np * rhof);
+wfp = (f*deltaPpump) /(Np * rhof);
+
+Pexit = Po4 + deltaPinj;
 
 end

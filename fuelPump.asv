@@ -1,9 +1,17 @@
-function [Wnorm] = fuelPump(Np, rhof, f)
+function [Wnorm, Pexit] = fuelPump(Np, f)
 
-Pe = P;
+deltaPinj = 55e4; %Pascals
 
-deltaPpump = Pe - Pin;
+rhof = 780; %kg/m^3
+
+Pf1 = 104e3; %Pascals
+
+Pf2 = Pcc + deltaPinj;
+
+deltaPpump = Pf2 - Pf1;
 
 Wnorm = (f*deltaPpump) /(Np * rhof);
+
+Pexit = Pcc + deltaPinj;
 
 end
