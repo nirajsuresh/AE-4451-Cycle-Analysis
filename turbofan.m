@@ -20,6 +20,14 @@ function outputs = turbofan(inputs)
     % Get flow properties
     [gammas, MWs, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(Ma);
     
+    
     % DO STUFF
     % Do more stuff
+    
+Tmaxo = 1300; %Kelvin
+bmax = 0.12;
+cb1 = 700; %Kelvin
+
+Tmax = Tmaxo + (cb1 * sqrt(b/bmax));
+
 end
