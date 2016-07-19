@@ -37,19 +37,22 @@ function [outputs, Tis, Pis] = ramjet(inputs)
     % DO STUFF
     Nd = aEff(4);
     [To1, Po1] = diffuser(Ta, Pa, yd, Ma, Nd);
-    
-    
     Nb = cEff(1);
+    
+    cpb = R * (yb / (yb-1));
+    
+    fmax = ((Tmax/To1) - (1 + ((yb - 1) / 2) * Ma ^ 2)) / (((Nb * hr) / (cpb * To1)) - (Tmax/To1));
+    
     Prb = Prs(1);
-    [Po4, f] = burner(yb, Po1, To1, Tmax, Nb, hr, R, Prb);
+    [Po4, To4] = burner(yb, Po1, To1, f, Nb, hr, R, Prb);
     
     Nn = aEff(1);
     [ue, Te, specT, TSFC, np, nth, no] = coreNozzle(Tmax, Po4, yn, Nn, R, f, Ma, Ta, Pa, hr);
 
     
     %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wi];
-    outputs = [specT, 0, 0, ue, 0, 0, TSFC, np, nth, no, u, 0];
-    Tis = [To1, 0, 0, Tmax, 0, 0, 0, 0, Te, 0, 0, 0];
+    outputs = [specT, fmax, 0, ue, 0, 0, TSFC, np, nth, no, u, 0];
+    Tis = [To1, 0, 0, To4, 0, 0, 0, 0, Te, 0, 0, 0];
     Pis = [Po1, 0, 0, Po4, 0, 0, 0, 0, Pa, 0, 0, 0, 0];
     
     
