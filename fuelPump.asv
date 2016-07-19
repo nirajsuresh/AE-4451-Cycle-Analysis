@@ -1,0 +1,9 @@
+function [Wnorm] = fuelPump(Np, rhof, f)
+
+Pe = P;
+
+deltaPpump = Pe - Pin;
+
+Wnorm = (f*deltaPpump) /(Np * rhof);
+
+end
