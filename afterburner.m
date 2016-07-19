@@ -7,5 +7,4 @@ cpab = (yab / (yab - 1)) * R;
 
 fab = ((1 + f) * (To6/To5) - 1) / (((Nab*hr) / (cpab*To5)) - (To6/To5)); 
 
-
 end

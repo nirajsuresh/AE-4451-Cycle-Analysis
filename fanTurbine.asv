@@ -1,0 +1,5 @@
+function [To7, Po7] = fanTurbine(To6)
+
+To7 = To6 - ((cpft * (To3 - To2) * (1 + b)) / ((cpft) * (1 + f)));
+
+end
