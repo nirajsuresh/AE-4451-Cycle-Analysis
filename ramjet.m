@@ -50,8 +50,8 @@ function [outputs, Tis, Pis] = ramjet(inputs)
     [ue, Te, specT, TSFC, np, nth, no] = coreNozzle(Tmax, Po4, yn, Nn, R, f, Ma, Ta, Pa, hr);
 
     
-    %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wi];
-    outputs = [specT, fmax, 0, ue, 0, 0, TSFC, np, nth, no, u, 0];
+    %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf, wc, wt, wft, wp];
+    outputs = [specT, fmax, 0, ue, 0, 0, TSFC, np, nth, no, u, 0, 0, 0, 0, 0];
     Tis = [To1, 0, 0, To4, 0, 0, 0, 0, Te, 0, 0, 0];
     Pis = [Po1, 0, 0, Po4, 0, 0, 0, 0, Pa, 0, 0, 0, 0];
     

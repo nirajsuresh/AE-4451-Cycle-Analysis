@@ -89,7 +89,11 @@ function run_Callback(hObject, eventdata, handles)
     handles.nth.String = num2str(outputs(9));
     handles.no.String = num2str(outputs(10));
     handles.u.String = num2str(outputs(11));
-    handles.wi.String = num2str(outputs(12));
+    handles.wf.String = num2str(outputs(12));
+    handles.wc.String = num2str(outputs(13));
+    handles.wt.String = num2str(outputs(14));
+    handles.wft.String = num2str(outputs(15));
+    handles.wp.String = num2str(outputs(16));
     
     handles.T1.String = num2str(Tis(1));
     handles.T2.String = num2str(Tis(2));
