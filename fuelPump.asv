@@ -13,6 +13,6 @@ function [wfp, Pexit] = fuelPump(Np, f, Po4, Pf)
 
     wfp = ((f+fab)*(deltaPpump)) /(Np * rhof);
 
-    Pexit = Po4 + Pf1 + deltaPinj;
+    Pexit = Po4 + + deltaPinj;
 
 end
