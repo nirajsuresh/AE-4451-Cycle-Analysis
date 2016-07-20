@@ -1,4 +1,4 @@
-function [To2, Po2, wf] = bypassFan(Po1, To1, Prf, R, yf, NPf)
+function [To2, Po2, wf] = bypassFan(Po1, To1, Prf, R, yf, NPf, B)
    % Only for turbofan
 
    Po2 = Po1 * Prf;
@@ -8,6 +8,6 @@ function [To2, Po2, wf] = bypassFan(Po1, To1, Prf, R, yf, NPf)
    
    To2 = To1 + (1 / Nf) * (To2S - To1);
    
-   wf = (R * (yf/(yf - 1))) * (To2 - To1);
+   wf = (1 + B) * (R * (yf/(yf - 1))) * (To2 - To1);
    
 end
