@@ -1,17 +1,9 @@
-function [ue, Te, specT, TSFC, Np, Nth, No] = fanNozzle(To6, Po6, yn, Nn, R, f, M, Ta, Pa, hr)
+function [uefn, Tefn] = fanNozzle(To2, Po2, yfn, Nfn, R, Pa)
 
- cpn = R*(yn/(yn-1));
- T7s = To6 * (Pa/Po6)^((yn - 1)/yn);
- Te = To6 * (1 - (Nn*(1 - (T7s/To6))));
- 
- ue = sqrt(2*cpn*To6*(1 - (Te/To6)));
- 
- uinfinity = M*sqrt(1.4*R*Ta);
- specT = (((1 + f)*ue) - uinfinity);
- TSFC = f / specT;
- 
- Np = specT * (uinfinity / (((1+f)*(ue^2)/2) - (uinfinity^2/2)));
- Nth = ((1+f)*(((ue^2)/2)-((uinfinity^2)/2)))/(f*hr);
- No = Np*Nth;
+    cpfn = R * (yfn / (yfn - 1));
+    Tes = To2 * (Pa / Po2)^ ((yfn - 1) / yfn);
+    Tefn = To2 * (1 - (Nfn * (1 - (Tes / To2))));
+
+    uefn = sqrt(2 * cpfn * To2 * (1 - (Tefn / To2)));
     
 end

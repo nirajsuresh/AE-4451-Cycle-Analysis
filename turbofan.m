@@ -75,29 +75,56 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     cpab = R * (yab / (yab - 1));
     fmaxab = (cpab * (Tmaxab - To52)) / ((Nab * hr) - (cpab * Tmaxab));
     Nn = aEff(1);
+    Nfn = aEff(2);
+    Ncn = aEff(3);
     ue = 0;
     uef = 0;
     uec = 0;
     Te = 0; 
     Tef = 0;
     Tec = 0;
+    To7 = 0;
     Pe = 0;
     Pef = 0;
     Pec = 0;
+    Po7 = 0;
     
     deld = 245 * Ma ^ 2 * (Pa/101325) * (B ^ 1.5);
+    u = Ma * sqrt(1.4 * R * Ta);
     if combinedNozzleCheck == 0
         % Core Nozzle & Fan Nozzle
-        [ue, Te, specTCore, TSFCCore, np, nth, no] = coreNozzle(To6, Po6, yn, Nn, R, f, M, Ta, Pa, hr);
+        [uecn, Te] = coreNozzle(To6, Po6, ycn, Ncn, R, Pa);
+        [uefn, Tef] = fanNozzle(To2, Po2, yfn, Nfn, R, Pa);
+        Pe = Pa;
+        Pef = Pa;
+        if afterburnerCheck == 0
+            specTCore = ((1 + f) * uecn) - u;
+            specTFan = (B * uefn) - Bu;
+            specT = specTCore + specTFan - deld;
+            KECore = (((1 + f) * uecn ^ 2) - (u ^ 2)) / 2;
+            KEFan = (B * (uefn ^ 2 - u ^ 2)) / 2;
+            nth = (KECore + KEFan) / (f * hr);
+            np = (specT * u) / (KECore + KEFan);
+            TSFC = f / specT;
+        else
+            specTCore = ((1 + f + fab) * uecn) - u;
+            specTFan = B * (uefn - u);
+            specT = specTCore + specTFan - deld;
+            KECore = (((1 + f + fab) * uecn ^ 2) - (u ^ 2)) / 2;
+            KEFan = (B * (uefn ^ 2 - u ^ 2)) / 2;
+            nth = (KECore + KEFan) / ((f + fab) * hr);
+            np = (specT * u) / (KECore + KEFan);
+            TSFC = (f + fab) / specT;
+        end
     else
         % Combined Nozzle Mixer & Combined Nozzle
         [Po7, To7] = nozzleMixer(Po6, To6, To2, B, f, fab);
         [uec, Tec] = combinedNozzle(To7, Po7, yn, Nn, R, Pa);
         Pec = Pa;
-        u = Ma * sqrt(1.4 * R * Ta);
         if afterburnerCheck == 0
-            specT = (((1 + f)*ue) - u);
-            nth = ((1+f)*(((ue^2)/2)-((u^2)/2)))/(f*hr);
+            specT = (((1 + f + B) * uec) - (B + 1) * u) - deld;
+            nth = (((1 + f + B) * (uec ^ 2) / 2) - ((B + 1) * (u ^ 2) / 2)) / (f * hr);
+            np = specT * u / (((1 + f + B) * (uec ^ 2) / 2) - ((B + 1) * (u ^ 2) / 2));
             TSFC = f / specT;
         else
             specT = (((1 + f + fab + B) * uec) - (B + 1) * u) - deld;
@@ -105,19 +132,19 @@ function [outputs, Tis, Pis] = turbofan(inputs)
             np = specT * u / (((1 + f + fab + B) * (uec ^ 2) / 2) - ((B + 1) * (u ^ 2) / 2));
             TSFC = (f + fab) / specT;
         end
-        no = np * nth;
-    end
-        
+    end  
+    no = np * nth;
+    
     % Fuel Pump
     Np = aEff(5);
-    [wp, Pexit] = fuelPump(Np, f, Po4, Pf);
+    [wp, Pexit] = fuelPump(Np, f, fab, Po4, Pf);
         
 
  
     %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf, wc, wt, wft, wp];
-    outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf, wc, wt, wft, wp];
+    outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf / 1000, wc / 1000, wt / 1000, wft / 1000, wp / 1000];
     Tis = [To1, To2, To3, To4, To51, To5m, To52, To6, Te, Tef, To7, Tec];
-    Pis = [Po1, Po2, Po3, Po4, Po51, Po5m, Po52, Po6, Pe, Pef, Po7, Pec, Pexit];
+    Pis = [Po1, Po2, Po3, Po4, Po51, Po5m, Po52, Po6, Pe, Pef, Po7, Pec, Pexit] ./ 1000;
     
     
 end
