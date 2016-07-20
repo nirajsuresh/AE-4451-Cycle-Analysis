@@ -30,6 +30,7 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     yn = gammas(9);
     yfn = gammas(10);
     ycn = gammas(11);
+    ytm = gammas(12);
     R = Runiv / mw;
     u = Ma * sqrt(1.4 * R * Ta);
     
@@ -55,25 +56,26 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     fmax = ((1 - b) * cpb * (TmaxFINAL - To3)) / ((Nb * hr) - (cpb * TmaxFINAL));
     % Turbine
     NPt = pEff(3);
-    [To51, Po51] = turbine(To4, To3, To2, Po4, f, yt, NPt);
+    [To51, Po51] = turbine(To4, R, wc, Po4, f, yt, NPt, b);
     wt = -wc;
     % Turbine Mixer
-    [To5m, Po5m] = turbineMixer(To51, To3, Po51, b);
+    [To5m, Po5m] = turbineMixer(To51, To3, Po51, b, R, ytm, f);
     % Fan Turbine
     NPft = pEff(4);
     [To52, Po52] = fanTurbine(To5m, Po5m, f, yft, NPft, wf, R);
     wft = -wf;
     % Afterburner
+    fmaxab = 0;
+    cpab = R * (yab / (yab - 1));
     if afterburnerCheck == 1
         Prab = Prs(2);
         Nab = cEff(2);
         [To6, Po6] = afterburner(f, fab, R, yab, Nab, To52, Po52, Prab, hr);
+        fmaxab = (cpab * (Tmaxab - To52)) / ((Nab * hr) - (cpab * Tmaxab));
     else
         To6 = To52;
         Po6 = Po52;
     end
-    cpab = R * (yab / (yab - 1));
-    fmaxab = (cpab * (Tmaxab - To52)) / ((Nab * hr) - (cpab * Tmaxab));
     Nn = aEff(1);
     Nfn = aEff(2);
     Ncn = aEff(3);
@@ -93,32 +95,32 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     u = Ma * sqrt(1.4 * R * Ta);
     if combinedNozzleCheck == 0
         % Core Nozzle & Fan Nozzle
-        [uecn, Te] = coreNozzle(To6, Po6, ycn, Ncn, R, Pa);
-        [uefn, Tef] = fanNozzle(To2, Po2, yfn, Nfn, R, Pa);
+        [ue, Te] = coreNozzle(To6, Po6, ycn, Ncn, R, Pa);
+        [uef, Tef] = fanNozzle(To2, Po2, yfn, Nfn, R, Pa);
         Pe = Pa;
         Pef = Pa;
         if afterburnerCheck == 0
-            specTCore = ((1 + f) * uecn) - u;
-            specTFan = (B * uefn) - Bu;
+            specTCore = ((1 + f) * ue) - u;
+            specTFan = B * (uef - u);
             specT = specTCore + specTFan - deld;
-            KECore = (((1 + f) * uecn ^ 2) - (u ^ 2)) / 2;
-            KEFan = (B * (uefn ^ 2 - u ^ 2)) / 2;
+            KECore = (((1 + f) * ue ^ 2) - (u ^ 2)) / 2;
+            KEFan = (B * (uef ^ 2 - u ^ 2)) / 2;
             nth = (KECore + KEFan) / (f * hr);
             np = (specT * u) / (KECore + KEFan);
             TSFC = f / specT;
         else
-            specTCore = ((1 + f + fab) * uecn) - u;
-            specTFan = B * (uefn - u);
+            specTCore = ((1 + f + fab) * ue) - u;
+            specTFan = B * (uef - u);
             specT = specTCore + specTFan - deld;
-            KECore = (((1 + f + fab) * uecn ^ 2) - (u ^ 2)) / 2;
-            KEFan = (B * (uefn ^ 2 - u ^ 2)) / 2;
+            KECore = (((1 + f + fab) * ue ^ 2) - (u ^ 2)) / 2;
+            KEFan = (B * (uef ^ 2 - u ^ 2)) / 2;
             nth = (KECore + KEFan) / ((f + fab) * hr);
             np = (specT * u) / (KECore + KEFan);
             TSFC = (f + fab) / specT;
         end
     else
         % Combined Nozzle Mixer & Combined Nozzle
-        [Po7, To7] = nozzleMixer(Po6, To6, To2, B, f, fab);
+        [Po7, To7] = nozzleMixer(Po6, Po2, To6, To2, B, f, fab, R);
         [uec, Tec] = combinedNozzle(To7, Po7, yn, Nn, R, Pa);
         Pec = Pa;
         if afterburnerCheck == 0
@@ -137,7 +139,7 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     
     % Fuel Pump
     Np = aEff(5);
-    [wp, Pexit] = fuelPump(Np, f, fab, Po4, Pf);
+    [wp, Pexit] = fuelPump(Np, f, fab, Po3);
         
 
  

@@ -22,7 +22,8 @@ function [Runiv, gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = 
    yn = 1.35;
    yfn = 1.4;
    ycn = 1.37;
-   gammas = [yd, yf, yc, yp, yb, yt, yft, yab, yn, yfn, ycn];
+   ytm = 1.34;
+   gammas = [yd, yf, yc, yp, yb, yt, yft, yab, yn, yfn, ycn, ytm];
 % molecular weights
    mw = 28.8;
 % adiabatic efficiencies

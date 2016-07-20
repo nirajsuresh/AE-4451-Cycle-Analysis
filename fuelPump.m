@@ -1,5 +1,5 @@
 
-function [wfp, Pexit] = fuelPump(Np, f, fab, Po4, Pf)
+function [wfp, Pexit] = fuelPump(Np, f, fab, Po3)
 
     deltaPinj = 55e4; %Pascals
 
@@ -7,12 +7,12 @@ function [wfp, Pexit] = fuelPump(Np, f, fab, Po4, Pf)
 
     Pf1 = 104e3; %Pascals
 
-    Pf2 = Po4 + deltaPinj;
+    Pf2 = Po3 + deltaPinj;
 
     deltaPpump = Pf2 - Pf1;
 
     wfp = ((f+fab)*(deltaPpump)) /(Np * rhof);
 
-    Pexit = Po4 + Pf1 + deltaPinj;
+    Pexit = Po3 + Pf1 + deltaPinj;
 
 end

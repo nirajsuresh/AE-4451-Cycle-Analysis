@@ -7,6 +7,6 @@ ynm = 1.44 - ((1.39e-4)*To7) + ((3.57e-8)*To7^2);
 
 Prnm = 0.8;
 
-Po7 = (Po2*(Po6/Po2)^((1+f)/(1+f+B))*(To7/To2)^(R*(ynm/(ynm-1))/R)*(To2/To6)^((R*(ynm/(ynm-1))/R)*(1+f)/(1+B+f)))*Prnm;
+Po7 = (Po2*(Po6/Po2)^((1+f)/(1+f+B))*(To7/To2)^(R*(ynm/(ynm-1))/R)*(To2/To6)^((R*(ynm/(ynm-1))/(R/MW))*(1+f)/(1+B+f)))*Prnm;
 
 end
