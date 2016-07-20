@@ -53,7 +53,7 @@ function [Runiv, gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = 
    Prab = 0.97;
    Prs = [Prb, Prab];
 % fuel heating value
-   hr = 45 * 10 ^ 6;
+   hr = 43.15 * 10 ^ 6;
 % fuel density
    rhof = 1;
 % specific drag loss

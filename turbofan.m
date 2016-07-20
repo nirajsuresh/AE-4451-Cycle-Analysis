@@ -38,31 +38,34 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     % Diffuser
     Nd = aEff(4);
     [To1, Po1] = diffuser(Ta, Pa, yd, Ma, Nd);
+    Po1 = Po1 * rd;
     % Bypass fan
-    [To2, Po2, wf] = bypassFan(Po1, To1, Prf, R, yf);
+    NPf = pEff(1);
+    [To2, Po2, wf] = bypassFan(Po1, To1, Prf, R, yf, NPf);
     % Compressor
     NPc = pEff(2);
     [To3, Po3, wc] = compressor(To2, Po2, yc, Prc, NPc, R);
     % Burner
     Nb = cEff(1);
     Prb = Prs(1);
-    [Po4, To4] = burner(yb, Po3, To3, f, Nb, hr, R, Prb);
+    [Po4, To4] = burner(yb, Po3, To3, f, Nb, hr, R, Prb, b);
     % fmax calculation
     cpb = R * (yb / (yb-1));
-    TmaxFINAL = Tmax + 700 * sqrt(b/bmax);
-    fmax = ((TmaxFINAL/To3) - (1 + ((yb - 1) / 2) * Ma ^ 2)) / (((Nb * hr) / (cpb * To3)) - (TmaxFINAL/To3));
+    TmaxFINAL = Tmax + (700 * sqrt(b/bmax));
+    fmax = ((1 - b) * cpb * (TmaxFINAL - To3)) / ((Nb * hr) - (cpb * TmaxFINAL));
     % Turbine
     NPt = pEff(3);
-    [To51, Po51, wt] = turbine(To4, To3, To2, f, yt, NPt, R);
+    [To51, Po51, wt] = turbine(To4, To3, To2, Po4, f, yt, NPt, R);
     % Turbine Mixer
     [To5m, Po5m] = turbineMixer(To51, To3, Po51, b);
     % Fan Turbine
-    [To52, Po52, wft] = fanTurbine(To5m, R, f, B, yft);
+    NPft = pEff(4);
+    [To52, Po52, wft] = fanTurbine(To5m, Po5m, To2, To1, R, f, yft, NPft);
     % Afterburner
     if afterburnerCheck == 1
         Prab = Prs(2);
         Nab = cEff(2);
-        [To6, Po6] = afterburner(f, fab, R, yab, Nab, To52, Prab);
+        [To6, Po6] = afterburner(f, fab, R, yab, Nab, To52, Po52, Prab, hr);
     else
         To6 = To52;
         Po6 = Po52;
@@ -86,20 +89,32 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     else
         % Combined Nozzle Mixer & Combined Nozzle
         [Po7, To7] = nozzleMixer(Po6, To6, To2, B);
-        [uec, Tec, specT, TSFC, np, nth, no] = combinedNozzle(To7, Po7, yn, Nn, R, f, M, Ta, Pa, hr);
+        [uec, Tec] = combinedNozzle(To7, Po7, yn, Nn, R, Pa);
         Pec = Pa;
+        u = Ma * sqrt(1.4 * R * Ta);
+        if afterburnerCheck == 0
+            specT = (((1 + f)*ue) - u);
+            nth = ((1+f)*(((ue^2)/2)-((u^2)/2)))/(f*hr);
+            TSFC = f / specT;
+        else
+            specT = (((1 + f + fab) * ue) - u);
+            nth = ((1 + f + fab) * (((ue^2)/2)-((u^2)/2)))/(f*hr);
+            TSFC = (f + fab) / specT;
+        end
+        np = specT * (u / (((1+f)*(ue^2)/2) - (u^2/2)));
+        no = np * nth;
     end
         
     % Fuel Pump
     Np = aEff(5);
-    [wp, Pexit] = fuelPump(Np, f);
+    [wp, Pexit] = fuelPump(Np, f, Po4, Pf);
         
 
  
     %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf, wc, wt, wft, wp];
     outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf, wc, wt, wft, wp];
-    Tis = [To1, To2, To3, To4, To51, To5m, To52, To6, Te, Tef, T7, Tec];
-    Pis = [Po1, Po2, Po3, Po4, Po51, Po5m, Po52, Po6, Pe, Pef, P7, Pec, Pexit];
+    Tis = [To1, To2, To3, To4, To51, To5m, To52, To6, Te, Tef, To7, Tec];
+    Pis = [Po1, Po2, Po3, Po4, Po51, Po5m, Po52, Po6, Pe, Pef, Po7, Pec, Pexit];
     
     
 end
