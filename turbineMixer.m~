@@ -1,4 +1,0 @@
-function [To5m, Po5m] = turbineMixer(To51, To3, Po51, b)
-    To5m = (1 + f - b) / (1 + f) * (T
-    Po5m = Po51;
-end

@@ -95,7 +95,7 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     u = Ma * sqrt(1.4 * R * Ta);
     if combinedNozzleCheck == 0
         % Core Nozzle & Fan Nozzle
-        [ue, Te] = coreNozzle(To6, Po6, ycn, Ncn, R, Pa);
+        [ue, Te] = coreNozzle(To6, Po6, yn, Ncn, R, Pa);
         [uef, Tef] = fanNozzle(To2, Po2, yfn, Nfn, R, Pa);
         Pe = Pa;
         Pef = Pa;
@@ -121,7 +121,7 @@ function [outputs, Tis, Pis] = turbofan(inputs)
     else
         % Combined Nozzle Mixer & Combined Nozzle
         [Po7, To7] = nozzleMixer(Po6, Po2, To6, To2, B, f, fab, R);
-        [uec, Tec] = combinedNozzle(To7, Po7, yn, Nn, R, Pa);
+        [uec, Tec] = combinedNozzle(To7, Po7, ycn, Nn, R, Pa);
         Pec = Pa;
         if afterburnerCheck == 0
             specT = (((1 + f + B) * uec) - (B + 1) * u) - deld;
@@ -144,7 +144,7 @@ function [outputs, Tis, Pis] = turbofan(inputs)
 
  
     %outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf, wc, wt, wft, wp];
-    outputs = [specT, fmax, fmaxab, ue, uef, uec, TSFC, np, nth, no, u, wf / 1000, wc / 1000, wt / 1000, wft / 1000, wp / 1000];
+    outputs = [specT / 1000, fmax, fmaxab, ue, uef, uec, TSFC * 1000, np, nth, no, u, wf / 1000, wc / 1000, wt / 1000, wft / 1000, wp / 1000];
     Tis = [To1, To2, To3, To4, To51, To5m, To52, To6, Te, Tef, To7, Tec];
     Pis = [Po1, Po2, Po3, Po4, Po51, Po5m, Po52, Po6, Pe, Pef, Po7, Pec, Pexit] ./ 1000;
     

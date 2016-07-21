@@ -29,21 +29,16 @@ function varargout = CycleAnalysis_OutputFcn(hObject, eventdata, handles)
 end
 
 %Choose engine type
-function ramjetButton_Callback(hObject, eventdata, handles)   
+
+function turbojetButton_Callback(hObject, eventdata, handles)
     global engineType
     engineType = 1;
 end
 
 
-function turbojetButton_Callback(hObject, eventdata, handles)
-    global engineType
-    engineType = 2;
-end
-
-
 function turbofanButton_Callback(hObject, eventdata, handles)
     global engineType
-    engineType = 3;
+    engineType = 2;
 end
 
 %Main script
@@ -66,13 +61,14 @@ function run_Callback(hObject, eventdata, handles)
     bma = str2double(handles.bma.String);
     %Get mods
     compressorBleed = handles.compressorBleed.Value;
+    if compressorBleed == 0
+        b = 0;
+    end
     afterburner = handles.afterburner.Value;
     combinedNozzle = handles.combinedNozzle.Value;
     
     inputs = [Ta Pa Pf Ma Prc B b Prf f fab Tmax Tmaxab bma compressorBleed afterburner combinedNozzle];
     if engineType == 1
-        [outputs, Tis, Pis] = ramjet(inputs);
-    elseif engineType == 2
         [outputs, Tis, Pis] = turbojet(inputs);
     else
         [outputs, Tis, Pis] = turbofan(inputs);
