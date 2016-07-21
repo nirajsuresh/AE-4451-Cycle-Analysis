@@ -1,4 +1,11 @@
-%GUI SETUP
+% THIS IS THE FILE TO RUN!! It sets up the GUI, takes in the user inputs
+% (when you hit run), passes them on to the respective engine script
+% (turbojet.m or turbofan.m, which use the various component scripts), gets
+% the outputs back from the engine and displays the results
+
+% NO CALCULATION IS DONE HERE, JUST GUI STUFF
+
+% CycleAnalysis.fig is the figure
 function varargout = CycleAnalysis(varargin)
     gui_Singleton = 1;
     gui_State = struct('gui_Name',       mfilename, ...

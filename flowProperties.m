@@ -1,4 +1,7 @@
 function [Runiv, gammas, mw, aEff, rd, pEff, cEff, Prs, hr, rhof, deld, Prnm] = flowProperties(M)
+
+% THIS FILE CONTAINS ALL OF THE FLOW PROPERTIES THAT ARE NOT USER INPUTS
+    
 % diffuser (d)
 % bypass fan (f)
 % compressor (c)
